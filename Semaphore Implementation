@@ -1,0 +1,145 @@
+#include<iostream>
+int arr[4],front=-1,rear=-1,s=1;
+using namespace std;
+
+int wait()
+{
+ return(s--);
+}
+
+int signal()
+{
+ return(s++);
+}
+
+
+void disp()
+{
+ int i;
+ for(i=0;i<=rear;i++)
+ {
+    cout<<" "<<arr[i]<<" |";
+ }
+}
+
+ void produce()
+{
+  int item1;
+  if(front==0&&rear==3||front==rear+1)
+  {
+   cout<<"\nBuffer over-flow. Cannot produce."<<endl;
+   return;
+  }
+    else if(front==-1)
+    {
+     cout<<"\n Enter the product number: "<<endl;
+     cin>>item1;
+     front=0;
+     rear=0;
+    }
+    else
+    {
+     cout<<"\n Enter the product number: "<<endl;
+     cin>>item1;
+
+     if(rear==3)
+      rear=0;
+     else
+      rear++;
+    }
+
+   arr[rear]=item1;
+   cout<<endl;
+   disp();
+   return;
+ }
+
+
+
+int consume()
+ {
+    int item;
+     if((front==-1)&&(rear=front+1))
+     {
+      cout<<"\nBuffer under-flow. Cannot consume."<<endl;
+      return 0;
+     }
+    item=arr[front];
+
+    if(front==rear)
+        {
+            cout<<"Consumed product: "<<arr[front];
+            front=rear=-1;
+        }
+    else if(front==3)
+       {
+        cout<<"Consumed product: "<<arr[front];
+        front=0;
+       }
+
+    else
+       {
+        cout<<"Consumed product: "<<arr[front];
+        front++;
+       }
+
+    return item;
+ }
+
+
+
+
+int main()
+{
+ int choice,item;
+ cout<<"PRODUCER AND CONSUMER"<<endl;
+
+ do
+ {
+  cout<<"Choose an option from the following: "<<endl;
+  cout<<"1.Producer"<<endl;
+  cout<<"2.Consumer"<<endl;
+  cout<<"3.End"<<endl;
+  cout<<"What is the option of your choice?"<<endl;
+  cin>>choice;
+
+switch(choice)
+{
+  case 1:
+  int item1;
+  if(s==1)
+  {
+    wait();
+    produce();
+    signal();
+  }
+  else
+    cout<<"\n Buffer is full. Try again later.\n";
+    break;
+
+  case 2:
+   item=0;
+   if(s==1)
+    {
+    wait();
+
+    if(!(item=consume()))
+    {
+     break;
+    }
+    cout<<"Consumer consuming:"<<item;
+    signal();
+    }
+    else
+     cout<<"\n Buffer is empty. Try again later.\n";
+    break;
+
+  case 3:
+    break;
+
+    default:
+    cout<<"Incorrect Option.";
+  }
+ }while(choice!=3);
+ return 0;
+}
