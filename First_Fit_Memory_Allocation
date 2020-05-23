@@ -1,0 +1,44 @@
+#include<iostream>
+using namespace std;
+int main()
+{
+    int b,p,blocks[20],processs[20],allocation[20];
+    cout<<"\nEnter the number of blocks : ";
+    cin>>b;
+    cout<<"\nEnter the size of each block : ";
+    for(int i=0;i<b;i++)
+    {
+        cin>>blocks[i];
+    }
+    cout<<"\nEnter the number of processes : ";
+    cin>>p;
+    cout<<"\nEnter the size of each process : ";
+    for(int i=0;i<p;i++)
+    {
+        cin>>processs[i];
+    }
+    for(int j=0;j<p;j++)
+    {
+        for(int i=0;i<b;i++)
+        {
+            if(blocks[i]>=processs[j])
+            {
+                allocation[j]=blocks[i];
+                blocks[i]=0;
+                break;
+            }
+            else
+                allocation[j]=0;
+        }
+    }
+    cout<<endl;
+    cout<<"First Fit Memory Allocation\n";
+    cout<<"Process\tMemory Required\tBlock Allocated";
+    for(int i=0;i<p;i++)
+    {
+        if(allocation[i]!=0)
+            cout<<"\nP"<<i<<"\t"<<processs[i]<<"\t\t"<<allocation[i];
+        else
+            cout<<"\nP"<<i<<"\t"<<processs[i]<<"\t\tunallocated";
+    }
+}
